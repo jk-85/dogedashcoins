@@ -14,8 +14,6 @@ namespace Show_Invested_Coins
 {
     public partial class Form1 : Form
     {
-        private Boolean warning = true; // Show warning (standard)
-
         private void readFile(string filename, string what_to_change)
         {
             String line;
@@ -36,11 +34,13 @@ namespace Show_Invested_Coins
                     {
                         if (line.ToLower() == "false")
                         {
-                            warning = false;
+                            checkBox2.CheckState = System.Windows.Forms.CheckState.Unchecked;
+                            checkBox2.Checked = false;
                         }
                         else
                         {
-                            warning = true;
+                            checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
+                            checkBox2.Checked = true;
                         }
                     }
                     //Read the next line
@@ -86,16 +86,8 @@ namespace Show_Invested_Coins
 
             // some changes after:
             readFile("dd_coins", "textbox");
-            
             readFile("dd_config", "checkbox");
-            if (warning == true)
-            {
-                checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            }
-            else
-            {
-                checkBox2.CheckState = System.Windows.Forms.CheckState.Unchecked;
-            }
+
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -129,11 +121,15 @@ namespace Show_Invested_Coins
                 textBox1.Text = "0";
             }*/
 
-            if (warning)
+            if (checkBox2.CheckState == System.Windows.Forms.CheckState.Checked)
             {
                 Form2 form2 = new Form2(this);
                 form2.TopMost = true;
                 form2.ShowDialog();
+            }
+            else
+            {
+                ChangeTextBoxText = "0";
             }
         }
 
@@ -183,8 +179,7 @@ namespace Show_Invested_Coins
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
-            warning = !warning;
-            writeFile("dd_config", warning.ToString());
+            writeFile("dd_config", checkBox2.Checked.ToString());
         }
     }
 }
