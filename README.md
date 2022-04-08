@@ -1,2 +1,2 @@
 # dogedashcoins
-See how many DogeDash coins you used.
+Control how many DogeDash coins (www.dogedash.com) you spent.
