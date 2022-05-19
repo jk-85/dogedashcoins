@@ -38,5 +38,15 @@ namespace Show_Invested_Coins
         {
             System.Diagnostics.Process.Start("explorer.exe", "https://twitter.com/Svenholm6");
         }
+
+        private void Form3_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(textBox1.Text);
+        }
     }
 }

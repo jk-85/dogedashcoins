@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "Show_Invested_Coins": {
+      "commandName": "Project",
+      "remoteDebugEnabled": false,
+      "authenticationMode": "Windows",
+      "remoteDebugMachine": "mi5",
+      "nativeDebugging": false
+    }
+  }
+}
