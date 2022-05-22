@@ -188,15 +188,34 @@ namespace Show_Invested_Coins
             automode = false;
             gameMenuScreenshotDone = false;
 
-            if (readFile("dd_uselocal", "") == -2)
+            // TODO HERE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            if (readFile("dd_uselocal", "") == -2 && readFile("dd_account", "") == 0) // dd_uselocal not there but dd_account there
             {
-                useLocalStorage = false;
+                if (!checkServer())
+                {
+                    using (DialogCenteringService centeringService = new DialogCenteringService(this)) {
+                        MessageBox.Show("Warning, the server is down, or your firewall blocks access to it. We will use your local storage for saving your data as long the blockage isn't removed!");
+                        useLocalStorage = true;
+                        writeFile("dd_uselocal", "");
+                        deleteFile("dd_account");
+                    }
+                }
+                else // Server is on, but both files exist, remove all local dd_files except dd_account and use dd_account
+                {
+                    useLocalStorage = false;
+                    deleteFile("dd_uselocal");
+                    deleteFile("dd_coins");
+                    deleteFile("dd_config");
+                    deleteFile("dd_values");
+                }
             }
             else
             {
-                // File exists, use only local storage
-                useLocalStorage = true;
-                loadOfflineValuesIntoWindow();
+                if (readFile("dd_uselocal", "") == -1 && readFile("dd_account", "") == -1) {  // If nothing exists
+                    // File exists, use only local storage
+                    useLocalStorage = true;
+                    loadOfflineValuesIntoWindow();
+                }
             }
 
             if (!useLocalStorage) {
@@ -272,6 +291,53 @@ namespace Show_Invested_Coins
                 }
             }
         }
+
+        public bool checkServer()
+        {
+            const int PORT_NO = 7075;
+            const string SERVER_IP = "serviceserver.ddnsfree.com";
+
+            string textToSend = "test";
+
+            // create a TCPClient object at the IP and port no.
+            try
+            {
+                TcpClient client = new TcpClient(SERVER_IP, PORT_NO);
+                NetworkStream nwStream = client.GetStream();
+                byte[] bytesToSend = ASCIIEncoding.ASCII.GetBytes(textToSend);
+
+                // send
+                nwStream.Write(bytesToSend, 0, bytesToSend.Length);
+
+                // read "ok"
+                byte[] bytesToRead = new byte[client.ReceiveBufferSize];
+                int bytesRead = nwStream.Read(bytesToRead, 0, client.ReceiveBufferSize);
+                client.Close();
+
+                MessageBox.Show(Encoding.ASCII.GetString(bytesToRead, 0, bytesRead));
+                if (Encoding.ASCII.GetString(bytesToRead, 0, bytesRead) == "ok") {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+            catch (SocketException ex)
+            {
+                /*if (ex.SocketErrorCode.ToString() == "ConnectionRefused")
+                {
+                    // Server is down
+                    MessageBox.Show("Warning, the server is down, or your firewall blocks access to it. We will use your local storage for saving your data as long the blockage isn't removed!");
+                    useLocalStorage = true;
+                    writeFile("dd_uselocal", "");
+                }*/
+                //MessageBox.Show(ex.Message);
+                //MessageBox.Show(ex.NativeErrorCode.ToString());
+                return false;
+            }
+
+        }
+
 
         public async void readFromServer(string command)
         {
