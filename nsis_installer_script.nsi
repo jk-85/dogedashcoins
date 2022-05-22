@@ -20,7 +20,7 @@
 #!define UPDATEURL "http://..." # "Product Updates" link
 #!define ABOUTURL "http://..." # "Publisher" link
 # This is the size (in kB) of all the files copied into "Program Files"
-!define INSTALLSIZE 162105
+!define INSTALLSIZE 162293
  
 RequestExecutionLevel admin ;Require admin rights on NT6+ (When UAC is turned on)
  
@@ -123,6 +123,8 @@ section "uninstall"
 	SetShellVarContext current
 	delete $LOCALAPPDATA\DogeDashCoins\dd_coins
 	delete $LOCALAPPDATA\DogeDashCoins\dd_config
+	delete $LOCALAPPDATA\DogeDashCoins\dd_values
+	delete $LOCALAPPDATA\DogeDashCoins\dd_account
 	rmDir $LOCALAPPDATA\DogeDashCoins
 	SetShellVarContext all
 	delete "$DESKTOP\${APPNAME}.lnk"
