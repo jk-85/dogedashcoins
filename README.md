@@ -11,4 +11,6 @@ Version 1.0.3 improvements:
 Version 1.0.2 improvements:
 Improved GUI and ability to remember coins and settings on every computer / notebook where you play. Write down your password from the options dialog and paste it to your 2nd and 3rd computer or notebook for example and have the same synchronized coin-values on every machine.
 
-Download here (Installer): https://github.com/jk-85/dogedashcoins/releases/download/v1.0.3/dogedashcoincalculator_install.exe
+
+Version 1.0.3 Download here (Installer): https://github.com/jk-85/dogedashcoins/releases/download/v1.0.3/dogedashcoincalculator_install.exe
+Important: If you have Windows Defender running or some other program, you have to allow the installer to run! If you're unsecure, just upload the installer wo https://www.virustotal.com and check it.
