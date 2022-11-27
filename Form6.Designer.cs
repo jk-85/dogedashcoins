@@ -238,6 +238,7 @@ namespace Show_Invested_Coins
             this.label8.TabIndex = 29;
             this.label8.Text = "1st:  6%\r\n2nd:  4%\r\n3rd:  3%\r\n4th:  2.5%\r\n5th-10th:  2%\r\n11th-25th:  1.5%\r\n25th-5" +
     "0th:  1%\r\n51th-100th:  0.5%";
+            this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
             // label9
             // 
@@ -252,7 +253,7 @@ namespace Show_Invested_Coins
             // textBox4
             // 
             this.textBox4.Location = new System.Drawing.Point(184, 516);
-            this.textBox4.MaxLength = 10;
+            this.textBox4.MaxLength = 42;
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(96, 23);
             this.textBox4.TabIndex = 30;

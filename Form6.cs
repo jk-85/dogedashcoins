@@ -393,5 +393,10 @@ namespace Show_Invested_Coins
         {
             MessageBox.Show("More interesting features will be released in version 1.0.4 here!");
         }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
