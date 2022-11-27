@@ -21,11 +21,13 @@ namespace Show_Invested_Coins
         private int index = 0;
         private Color standardcolor;
         private bool lbconvertflag = false;   // Used for old leaderboard-format when user selects old board
+        PrivateFontCollection pfc = new PrivateFontCollection();   // Important, only declare here, could be collected via garbage collection inside function!
 
         public Form6(Form1 parent)
         {
             InitializeComponent();
             p = parent;
+            pfc.AddFontFile("ARCO.ttf");
         }
         private void loadLatestLB(string command)
         {
@@ -101,9 +103,7 @@ namespace Show_Invested_Coins
 
         private void Form6_Load(object sender, EventArgs e)
         {
-            PrivateFontCollection pfc = new PrivateFontCollection();
             // Copy in Debug-Folder if not there!
-            pfc.AddFontFile("ARCO.ttf");
             label1.Font = new Font(pfc.Families[0], 14, FontStyle.Regular);
             label2.Font = new Font(pfc.Families[0], 14, FontStyle.Regular);
             label4.Font = new Font(pfc.Families[0], 14, FontStyle.Regular);
