@@ -14,4 +14,4 @@ Improved GUI and ability to remember coins and settings on every computer / note
 
 Version 1.0.3 Download here (Installer): https://github.com/jk-85/dogedashcoins/releases/download/v1.0.3/dogedashcoincalculator_install.exe
 
-Important: If you have Windows Defender running or some other security programs, you have to allow the installer (and maybe the software itself) to run! If you're not sure about the installer, just upload the installer wo https://www.virustotal.com and check it. There may be one false positive, but it's clean!
+Important: If you have Windows Defender running or some other security programs, you have to allow the installer (and maybe the software itself) to run! If you're not sure about the installer, just upload the installer to https://www.virustotal.com and check it. There may be one false positive, but it's clean!
