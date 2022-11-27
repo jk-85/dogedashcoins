@@ -1,7 +1,10 @@
-# Doge Dash Coin Calculator v1.0.3
+# Doge Dash Coin Calculator v1.0.3.1
 Control how many DogeDash coins (www.dogedash.com) you spend.
 
 ![grafik](https://user-images.githubusercontent.com/13134932/204112027-0ca99dee-02b5-4367-a621-ae69468ae4ea.png)
+
+Version 1.0.31 improvements:
+- Longer username-field in leaderboard-dialog
 
 Version 1.0.3 improvements:
 - Introduced leaderboard functionality
