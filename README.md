@@ -1,5 +1,5 @@
 # Doge Dash Coin Calculator v1.0.3.1
-Control how many DogeDash coins (www.dogedash.com) you spend.
+Control how many DogeDash coins (https://www.hello.one/arcade) you spend. You can install this tool on every computer/notebook you have and if you give every computer/notebook the same key you find in the options-dialog, you can count your coins on every computer/notebook synchronously.
 
 ![grafik](https://user-images.githubusercontent.com/13134932/204112027-0ca99dee-02b5-4367-a621-ae69468ae4ea.png)
 
