@@ -1,3 +1,11 @@
+# Doge Dash Coin Calculator v1.0.15
+Screenshot latest update (09/2024):
+![grafik](https://github.com/user-attachments/assets/f47b03a7-87c4-4f0b-982f-d857e47953ae)
+For a donation of any kind you can get the full leaderboard-software
+and analytical dashboard and don't have to wait until I update this board on this page http://helloanalytics.royalwebhosting.net/board.php!
+Please contact me on Twitter (https://x.com/Svenholm6) or in the HELLO discord.
+
+
 # Doge Dash Coin Calculator v1.0.3.1
 Control how many DogeDash coins (https://www.hello.one/arcade) you spend. You can install this tool on every computer/notebook you have and if you give every computer/notebook the same key you find in the options-dialog, you can count your coins on every computer/notebook synchronously.
 
