@@ -30,5 +30,10 @@ namespace Show_Invested_Coins
             p.ChangeTextBoxText = "0";
             this.Close();
         }
+
+        private void Form2_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

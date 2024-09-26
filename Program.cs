@@ -3,6 +3,8 @@
 
 // TODO: https://stackoverflow.com/questions/184084/how-to-force-c-sharp-net-app-to-run-only-one-instance-in-windows
 
+// Text-Probleme mit VS 17.4.1 gehabt in Form6.cs
+
 using System;
 using System.Collections.Generic;
 using System.Linq;

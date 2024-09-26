@@ -20,23 +20,25 @@
 #!define UPDATEURL "http://..." # "Product Updates" link
 #!define ABOUTURL "http://..." # "Publisher" link
 # This is the size (in kB) of all the files copied into "Program Files"
-!define INSTALLSIZE 162293
+!define INSTALLSIZE 156612
  
 RequestExecutionLevel admin ;Require admin rights on NT6+ (When UAC is turned on)
  
 InstallDir "$PROGRAMFILES64\${APPNAME}"
- 
+
+LicenseText "Please review the license and the privacy policy below before installing DogeDash Coin Calculator. If you accept both, click I Agree."
+
 # rtf or txt file - remember if it is txt, it must be in the DOS text format (\r\n)
-#LicenseData "license.rtf"
+LicenseData "license_and_policy.txt"
 # This will be in the installer/uninstaller's title bar
 Name "DogeDash Coin Calculator"
 Icon "icon.ico"
 outFile "dogedashcoincalculator_install.exe"
  
 !include LogicLib.nsh
- 
+
 # Just three pages - license agreement, install location, and installation
-#page license
+page license
 page directory
 Page instfiles
  
@@ -55,10 +57,14 @@ function .onInit
 	setShellVarContext all
 	!insertmacro VerifyUserIsAdmin
 functionEnd
- 
+	
 section "install"
+	# Standard font:
+	#SetFont "MS Shell Dlg" 8
+	
 	# Files for the install directory - to build the installer, these should be in the same directory as the install script (this file)
 	setOutPath $INSTDIR
+
 	# Files added here should be removed by the uninstaller (see section "uninstall")
 	file "Show_Invested_Coins.exe"
 	file "icon.ico"
@@ -67,6 +73,8 @@ section "install"
 	file "PresentationNative_cor3.dll"
 	file "vcruntime140_cor3.dll"
 	file "wpfgfx_cor3.dll"
+	file "license_and_policy.txt"
+	file "ARCO.ttf"
 	# Add any other files for the install directory (license files, app data, etc) here
  
 	# Uninstaller - See function un.onInit and section "uninstall" for configuration
@@ -75,6 +83,7 @@ section "install"
 	# Start Menu
 	createDirectory "$SMPROGRAMS\${APPNAME}"
 	createShortCut "$SMPROGRAMS\${APPNAME}\${APPNAME}.lnk" "$INSTDIR\Show_Invested_Coins.exe" "" "$INSTDIR\icon.ico"
+	createShortCut "$SMPROGRAMS\${APPNAME}\license_and_policy.lnk" "$INSTDIR\license_and_policy.txt"
 	createShortCut "$SMPROGRAMS\${APPNAME}\uninstall.lnk" "$INSTDIR\uninstall.exe"
 	
 	# Desktop
@@ -120,11 +129,14 @@ section "uninstall"
 	delete $INSTDIR\PresentationNative_cor3.dll
 	delete $INSTDIR\vcruntime140_cor3.dll
 	delete $INSTDIR\wpfgfx_cor3.dll
+	delete $INSTDIR\license_and_policy.txt
+	delete $INSTDIR\ARCO.ttf
 	SetShellVarContext current
 	delete $LOCALAPPDATA\DogeDashCoins\dd_coins
 	delete $LOCALAPPDATA\DogeDashCoins\dd_config
 	delete $LOCALAPPDATA\DogeDashCoins\dd_values
 	delete $LOCALAPPDATA\DogeDashCoins\dd_account
+	delete $LOCALAPPDATA\DogeDashCoins\dd_donatebox
 	rmDir $LOCALAPPDATA\DogeDashCoins
 	SetShellVarContext all
 	delete "$DESKTOP\${APPNAME}.lnk"

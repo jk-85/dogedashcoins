@@ -72,8 +72,8 @@ namespace Show_Invested_Coins
             }
             catch (FormatException)
             {
-                p.easy_coins = 300;
-                textBox1.Text = "300";
+                p.easy_coins = 3;
+                textBox1.Text = "3";
             }
 
             try
@@ -82,8 +82,8 @@ namespace Show_Invested_Coins
             }
             catch (FormatException)
             {
-                p.normal_coins = 500;
-                textBox2.Text = "500";
+                p.normal_coins = 5;
+                textBox2.Text = "5";
             }
 
             try
@@ -92,8 +92,8 @@ namespace Show_Invested_Coins
             }
             catch (FormatException)
             {
-                p.elite_coins = 700;
-                textBox3.Text = "700";
+                p.elite_coins = 7;
+                textBox3.Text = "7";
             }
         }
 
@@ -104,6 +104,19 @@ namespace Show_Invested_Coins
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (checkBox1.CheckState == CheckState.Unchecked)
+            {
+                p.useLocalStorage = true;
+                p.writeFile("dd_uselocal", "");
+                p.deleteFile("dd_account");
+            }
+            else
+            {
+                p.useLocalStorage = false;
+                p.deleteFile("dd_uselocal");
+                p.userpass = textBox4.Text;
+            }
+
             if (checkBox1.Checked) {
                 if (Form1.testRandomString(textBox4.Text))
                 {
@@ -122,6 +135,7 @@ namespace Show_Invested_Coins
                 }
             }
 
+            // TODO: If user enters other account, do NOT use coin-values in these three fields and load the correct values from server!
             p.label4.Text = "+" + Int32.Parse(textBox1.Text).ToString();
             p.label5.Text = "+" + Int32.Parse(textBox2.Text).ToString();
             p.label6.Text = "+" + Int32.Parse(textBox3.Text).ToString();
@@ -155,18 +169,14 @@ namespace Show_Invested_Coins
         {
             if(checkBox1.CheckState == CheckState.Unchecked)
             {
-                p.useLocalStorage = true;
-                p.writeFile("dd_uselocal","");
-                p.deleteFile("dd_account");
                 textBox4.Enabled = false;
+                label6.Visible = false;
             }
             else
             {
-                p.useLocalStorage = false;
-                p.deleteFile("dd_uselocal");
                 textBox4.Enabled = true;
-                p.userpass = Form1.RandomString(10);
-                textBox4.Text = p.userpass;
+                textBox4.Text = Form1.RandomString(10);
+                label6.Visible = true;
             }
         }
 

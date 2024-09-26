@@ -30,6 +30,7 @@ namespace Show_Invested_Coins
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form4));
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
@@ -69,7 +70,7 @@ namespace Show_Invested_Coins
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(100, 23);
             this.textBox1.TabIndex = 1;
-            this.textBox1.Text = "300";
+            this.textBox1.Text = "3";
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // textBox2
@@ -79,7 +80,7 @@ namespace Show_Invested_Coins
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(100, 23);
             this.textBox2.TabIndex = 2;
-            this.textBox2.Text = "500";
+            this.textBox2.Text = "5";
             this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // textBox3
@@ -89,7 +90,7 @@ namespace Show_Invested_Coins
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(100, 23);
             this.textBox3.TabIndex = 3;
-            this.textBox3.Text = "700";
+            this.textBox3.Text = "7";
             this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // label2
@@ -135,7 +136,7 @@ namespace Show_Invested_Coins
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::Show_Invested_Coins.Properties.Resources.doge_coin_small;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(207, 32);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(23, 26);
@@ -145,7 +146,7 @@ namespace Show_Invested_Coins
             // 
             // pictureBox2
             // 
-            this.pictureBox2.Image = global::Show_Invested_Coins.Properties.Resources.doge_coin_small;
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
             this.pictureBox2.Location = new System.Drawing.Point(207, 61);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(23, 26);
@@ -155,7 +156,7 @@ namespace Show_Invested_Coins
             // 
             // pictureBox3
             // 
-            this.pictureBox3.Image = global::Show_Invested_Coins.Properties.Resources.doge_coin_small;
+            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
             this.pictureBox3.Location = new System.Drawing.Point(207, 90);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(23, 26);

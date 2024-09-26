@@ -25,6 +25,9 @@ namespace Show_Invested_Coins
         private bool gameMenuScreenshotDone;
         public string userpass;
         private const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        public string leaderboard;
+        public string leaderboardlist;
+        Form6 form6;
 
         [DllImport("user32.dll")]
         private static extern IntPtr GetForegroundWindow();
@@ -65,7 +68,7 @@ namespace Show_Invested_Coins
                 return false;
         }
 
-        private int readFile(string _filename, string what_to_change)
+        public int readFile(string _filename, string what_to_change)
         {
             string filename =  data + _filename;
 
@@ -79,6 +82,11 @@ namespace Show_Invested_Coins
                 //Continue to read until you reach end of file
                 while (line != null)
                 {
+                    if(what_to_change == "username")
+                    {
+                        form6.textBox4.Text = line;
+                        break;  // Only 1 line in the file
+                    }
                     if (what_to_change == "textbox")
                         textBox1.Text = line;
                     if (what_to_change == "checkbox")
@@ -130,9 +138,9 @@ namespace Show_Invested_Coins
                     line = sr.ReadLine();
                 }
 
-                if(easy_coins == 0) { easy_coins = 300; }
-                if (normal_coins == 0) { normal_coins = 500; }
-                if (elite_coins == 0) { elite_coins = 700; }
+                if(easy_coins == 0) { easy_coins = 3; }
+                if (normal_coins == 0) { normal_coins = 5; }
+                if (elite_coins == 0) { elite_coins = 7; }
 
                 sr.Close();
             }
@@ -194,7 +202,7 @@ namespace Show_Invested_Coins
                 if (!checkServer())
                 {
                     using (DialogCenteringService centeringService = new DialogCenteringService(this)) {
-                        MessageBox.Show("Warning, the server is down, or your firewall blocks access to it. We will use your local storage for saving your data as long the blockage isn't removed!");
+                        MessageBox.Show("Warning, the server is down, or your firewall blocks access to it. We will use your local storage for saving your data as long the blockage isn't removed! Please allow this program in your firewall and restart it!");
                         useLocalStorage = true;
                         writeFile("dd_uselocal", "");
                         deleteFile("dd_account");
@@ -227,6 +235,8 @@ namespace Show_Invested_Coins
             {
                 // If local storage is set, user only can use server, if he actively checks the box in the options dialog!
             }
+
+            form6 = new Form6(this);
         }
 
         public void loadOnlineValuesIntoWindow()
@@ -254,12 +264,12 @@ namespace Show_Invested_Coins
             readFile("dd_coins", "textbox");
             readFile("dd_config", "checkbox");
             readFile("dd_values", "coinvalues");
-            label4.Text = "+" + easy_coins;
-            label5.Text = "+" + normal_coins;
-            label6.Text = "+" + elite_coins;
+            label4.Text = easy_coins + "+";
+            label5.Text = normal_coins + "+";
+            label6.Text = elite_coins + "+";
         }
 
-        public async void writeToServer(string command, string sendStr)
+        public void writeToServer(string command, string sendStr)
         {
             if (!useLocalStorage)
             {
@@ -272,11 +282,20 @@ namespace Show_Invested_Coins
                 try
                 {
                     TcpClient client = new TcpClient(SERVER_IP, PORT_NO);
+
                     NetworkStream nwStream = client.GetStream();
                     byte[] bytesToSend = ASCIIEncoding.ASCII.GetBytes(textToSend);
 
                     // send
                     nwStream.Write(bytesToSend, 0, bytesToSend.Length);
+
+                    if (command == "getleaderboard")
+                    {
+                        byte[] leaderboardBytes = new byte[client.ReceiveBufferSize];
+                        int bytesRead = nwStream.Read(leaderboardBytes, 0, client.ReceiveBufferSize);
+                        this.leaderboard = Encoding.ASCII.GetString(leaderboardBytes, 0, bytesRead);
+                        //MessageBox.Show("Sendstring: ["+textToSend+"[\n"+leaderboard.Length+ "bytes read back");
+                    }
                     client.Close();
                 }
                 catch (SocketException ex)
@@ -284,7 +303,8 @@ namespace Show_Invested_Coins
                     if (ex.SocketErrorCode.ToString() == "ConnectionRefused")
                     {
                         // Server is down
-                        MessageBox.Show("Warning, the server is down, or your firewall blocks access to it. We will use your local storage for saving your data as long the blockage isn't removed!");
+                        MessageBox.Show("Warning, the server is down, or your firewall blocks access to it. We will use your local storage for saving your data as long the blockage isn't removed! If you want online storage again, please enable it in the options! Please allow this program in your firewall and restart it!");
+
                         useLocalStorage = true;
                         writeFile("dd_uselocal", "");
                     }
@@ -314,7 +334,7 @@ namespace Show_Invested_Coins
                 int bytesRead = nwStream.Read(bytesToRead, 0, client.ReceiveBufferSize);
                 client.Close();
 
-                MessageBox.Show(Encoding.ASCII.GetString(bytesToRead, 0, bytesRead));
+                //MessageBox.Show(Encoding.ASCII.GetString(bytesToRead, 0, bytesRead));
                 if (Encoding.ASCII.GetString(bytesToRead, 0, bytesRead) == "ok") {
                     return true;
                 }
@@ -338,7 +358,6 @@ namespace Show_Invested_Coins
 
         }
 
-
         public async void readFromServer(string command)
         {
             if (!useLocalStorage)
@@ -349,15 +368,13 @@ namespace Show_Invested_Coins
                 string textToSend = userpass + "_" + command + "_read";
 
                 // create a TCPClient object at the IP and port no.
-                try
-                {
+                try {
                     TcpClient client = new TcpClient(SERVER_IP, PORT_NO);
                     NetworkStream nwStream = client.GetStream();
                     byte[] bytesToSend = ASCIIEncoding.ASCII.GetBytes(textToSend);
 
                     // send
                     nwStream.Write(bytesToSend, 0, bytesToSend.Length);
-
 
                     // read
                     byte[] bytesToRead = new byte[client.ReceiveBufferSize];
@@ -368,12 +385,34 @@ namespace Show_Invested_Coins
                         easy_coins = Int32.Parse(Encoding.ASCII.GetString(bytesToRead, 0, bytesRead).Split('|')[1].Split(',')[0]);
                         normal_coins = Int32.Parse(Encoding.ASCII.GetString(bytesToRead, 0, bytesRead).Split('|')[1].Split(',')[1]);
                         elite_coins = Int32.Parse(Encoding.ASCII.GetString(bytesToRead, 0, bytesRead).Split('|')[1].Split(',')[2]);
-                        label4.Text = "+" + easy_coins.ToString(); label5.Text = "+" + normal_coins.ToString(); label6.Text = "+" + elite_coins.ToString();
+                        label4.Text = easy_coins.ToString()+"+"; label5.Text = normal_coins.ToString() + "+"; label6.Text = elite_coins.ToString() + "+";
                     }
                     if(command == "config") {
                         checkBox1.CheckState = ((Encoding.ASCII.GetString(bytesToRead, 0, bytesRead).Split('|')[0]) == "True") ? CheckState.Checked : CheckState.Unchecked;
                         checkBox2.CheckState = ((Encoding.ASCII.GetString(bytesToRead, 0, bytesRead).Split('|')[1]) == "True") ? CheckState.Checked : CheckState.Unchecked;
                     }
+                    if(command == "leaderboard") {
+                        
+                        // get latest leaderboard-results
+                        this.leaderboard = Encoding.ASCII.GetString(bytesToRead, 0, bytesRead);
+                    }
+
+                    if (command == "getleaderboardactual")
+                    {
+                        this.leaderboard = Encoding.ASCII.GetString(bytesToRead, 0, bytesRead);
+                    }
+
+                    if (command == "leaderboardlist") {  // Get file-list of old leaderboards to call later
+                        this.leaderboardlist = Encoding.ASCII.GetString(bytesToRead, 0, bytesRead);
+                    }
+                    if(command == "username") {
+                        form6.textBox4.Text = Encoding.ASCII.GetString(bytesToRead, 0, bytesRead);
+                    }
+                    if(command == "uniqueplayers")
+                    {
+                        form6.label14.Text = Encoding.ASCII.GetString(bytesToRead, 0, bytesRead);
+                    }
+
                     client.Close();
                 }
                 catch (SocketException ex)
@@ -381,11 +420,19 @@ namespace Show_Invested_Coins
                     if (ex.SocketErrorCode.ToString() == "ConnectionRefused")
                     {
                         // Server is down
-                        MessageBox.Show("Warning, the server is down, or your firewall blocks access to it. We will use your local storage for saving your data. If you want online storage again, please enable it in the options!", "DogeDashCoinCalculator");
+                        MessageBox.Show("Warning, the server is down, or your firewall blocks access to it. We will use your local storage for saving your data as long the blockage isn't removed! If you want online storage again, please enable it in the options! Please allow this program in your firewall and restart it!");
                         useLocalStorage = true;
                         writeFile("dd_uselocal", "");
                     }
                 }
+                /*catch(IndexOutOfRangeException)
+                {
+
+                }
+                catch(System.FormatException)
+                {
+
+                }*/
             }
         }
 
@@ -515,7 +562,8 @@ namespace Show_Invested_Coins
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("explorer.exe", "https://poocoin.app/tokens/0x7ae5709c585ccfb3e61ff312ec632c21a5f03f70");
+            //System.Diagnostics.Process.Start("explorer.exe", "https://poocoin.app/tokens/0x7ae5709c585ccfb3e61ff312ec632c21a5f03f70");
+            System.Diagnostics.Process.Start("explorer.exe", "https://poocoin.app/tokens/0x0f1cbed8efa0e012adbccb1638d0ab0147d5ac00");
         }
 
         private async void HookManager_MouseDown(object sender, MouseEventArgs e)
@@ -706,6 +754,45 @@ namespace Show_Invested_Coins
             {
                 this.Close();
             }
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            if (useLocalStorage)
+            {
+                MessageBox.Show("Sorry, but you have disabled account-creation in the options and can't use these features! Please create an account there, check the option \"Save configuration on a server...\"!");
+            }
+            else
+            {
+                form6.TopMost = true;
+                form6.ShowDialog();
+            }
+        }
+
+        private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("explorer.exe", "https://www.dextools.io/app/en/bnb/pair-explorer/0x54e6358f24927c259aaf53aa230b56e2d27b5810");
+        }
+
+        private void Form1_Shown(Object sender, EventArgs e)
+        {
+            if (readFile("dd_donatebox", "") == -1)
+            {
+                writeFile("dd_donatebox", "");
+                Form7 info = new Form7(this);
+                info.ShowDialog();
+            }
+
         }
 
         private void button9_Click(object sender, EventArgs e)

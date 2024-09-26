@@ -48,5 +48,15 @@ namespace Show_Invested_Coins
         {
             Clipboard.SetText(textBox1.Text);
         }
+
+        private void label2_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(textBox2.Text);
+        }
     }
 }

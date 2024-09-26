@@ -1,13 +1,28 @@
-# Doge Dash Coin Calculator
-Control how many DogeDash coins (www.dogedash.com) you spend.
+# Doge Dash Coin Calculator v1.0.15
+Screenshot latest update (09/2024):
+![grafik](https://github.com/user-attachments/assets/f47b03a7-87c4-4f0b-982f-d857e47953ae)
+For a donation of any kind you can get the full leaderboard-software
+and analytical dashboard and don't have to wait until I update this board on this page http://helloanalytics.royalwebhosting.net/board.php!
+Please contact me on Twitter (https://x.com/Svenholm6) or in the HELLO Discord (https://discord.com/channels/897896078421155912).
 
-![image](https://user-images.githubusercontent.com/13134932/169420953-6c30167e-4d7e-4065-adb3-bb0916bb4e9f.png)
+
+# Doge Dash Coin Calculator v1.0.3.1
+Control how many DogeDash coins (https://www.hello.one/arcade) you spend. You can install this tool on every computer/notebook you have and if you give every computer/notebook the same key you find in the options-dialog, you can count your coins on every computer/notebook synchronously.
+
+![grafik](https://user-images.githubusercontent.com/13134932/204112027-0ca99dee-02b5-4367-a621-ae69468ae4ea.png)
+
+Version 1.0.3.1 improvements:
+- Longer username-field in leaderboard-dialog
+
+Version 1.0.3 improvements:
+- Introduced leaderboard functionality
+- View past leaderboards and some statistics (more statistics will come in version 1.0.4)
+- Calculate your actual real-time earnings if you stay in the top100 leaderboard!
 
 Version 1.0.2 improvements:
-
 Improved GUI and ability to remember coins and settings on every computer / notebook where you play. Write down your password from the options dialog and paste it to your 2nd and 3rd computer or notebook for example and have the same synchronized coin-values on every machine.
 
+Version 1.0.3.1 Download here (Installer): https://github.com/jk-85/dogedashcoins/releases/download/v1.0.3.1/dogedashcoincalculator_install.exe
+Tested unter Windows 7 and Windows 10 64 Bit.
 
-Download here (Installer): https://github.com/jk-85/dogedashcoins/releases/download/v1.0.2/dogedashcoincalculator_install.exe
-
-Without installer: https://github.com/jk-85/dogedashcoins/releases/download/v1.0.2/dogedashcoins_v1.0.2.zip
+Important: If you have Windows Defender running or some other security programs, you have to allow the installer (and maybe the software itself) to run! If you're not sure about the installer, just upload the installer to https://www.virustotal.com and check it. There may be one false positive, but it's clean!
